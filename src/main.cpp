@@ -50,6 +50,14 @@ void loop() {
 
      Serial.println("distancia: ");
      if (millis()-tiempo1> espera1){
+//La logica en el if esta mal. 
+//Te lo pongo con un ejemplo:
+//millis arranca en 0 cuando encendes el micro. Cuando paso un segundo, tiene el valor 1000
+//en ese momento: 1000-0 > 750 --> true, se ejecuta esto y deja a tiempo1 = 1000.
+//supongamos que paso otro segunto, millis ahora vale 2000 =>
+//2000-1000 > 750 es true, se ejecuta y deja tiempo1 = 1000+2000 = 3000
+//PERO ahora supone que paso un segundo mas, entonces millis = 3000
+//entonces 3000-3000 > 750 es false, no se ejecuta, y de hecho no se ejecuta nunca mas (O al menos hasta que millis de la vuelta dentro de ~50 dias)
       analogWrite(ENA, 80);  
       digitalWrite(IN1, LOW); 
       digitalWrite(IN2, HIGH);
